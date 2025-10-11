@@ -91,6 +91,11 @@
             box-shadow: var(--shadow-lg);
         }
         #myIframe {
+            display: none;
+        }
+        .error-message {
+            color: #ff4d75;
+            margin-top: 1rem;
             display: none; /* Hidden by default */
         }
     </style>
@@ -102,28 +107,61 @@
         <p>Please enter an access code to continue.</p>
         <div class="input-group">
             <input type="text" id="invite-code" placeholder="XXXXXX">
-            <button id="searchButton"><div class="container"><i class="fa-solid fa-arrow-right"></i></button>
+            <button id="submit-btn"><i class="fa-solid fa-arrow-right"></i></button>
         </div>
+        <p class="error-message" id="error-message">Invalid access code. Please try again.</p>
     </div>
     
     <iframe id="myIframe" src="banana.html"></iframe>
 
     <script>
-        // Your existing JavaScript for iframe and fullscreen handling remains unchanged.
-        function toggleFullscreen() {
-            const elem = document.getElementById("myIframe");
-            if (elem.requestFullscreen) elem.requestFullscreen();
-            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
-            else if (elem.mozRequestFullscreen) elem.mozRequestFullscreen();
-            else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+        const inviteCodeInput = document.getElementById('invite-code');
+        const submitBtn = document.getElementById('submit-btn');
+        const errorMessage = document.getElementById('error-message');
+        const iframe = document.getElementById('myIframe');
+
+        function checkCode() {
+            const code = inviteCodeInput.value.trim();
+            // This is a placeholder for your actual access code logic.
+            // For this example, we'll use a simple hardcoded value.
+            if (code === '123456') {
+                // If code is correct, show the iframe and go fullscreen.
+                document.querySelector('.access-container').style.display = 'none';
+                iframe.style.display = 'block';
+                toggleFullscreen();
+            } else {
+                // If code is incorrect, show an error message.
+                errorMessage.style.display = 'block';
+                inviteCodeInput.value = ''; // Clear the input field
+            }
         }
 
-        const iframe = document.getElementById('myIframe');
+        // --- Event Listeners ---
+        // Listen for a click on the submit button
+        submitBtn.addEventListener('click', checkCode);
+
+        // Listen for the "Enter" key press in the input field
+        inviteCodeInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevents default form submission behavior
+                checkCode();
+            }
+        });
+
+        // --- Fullscreen Logic ---
+        function toggleFullscreen() {
+            if (iframe.requestFullscreen) iframe.requestFullscreen();
+            else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen(); // Safari
+            else if (iframe.mozRequestFullscreen) iframe.mozRequestFullscreen(); // Firefox
+            else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen(); // IE11
+        }
+
         window.addEventListener('message', function(event) {
             if (event.data === 'sequenceFinished') {
                 if (document.fullscreenElement) document.exitFullscreen();
             }
         });
+
         document.addEventListener('fullscreenchange', function() {
             if (!document.fullscreenElement) {
                 iframe.contentWindow.postMessage('resetSequence', '*');
@@ -132,4 +170,3 @@
     </script>
 </body>
 </html>
-
