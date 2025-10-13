@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6H3WPQVTX0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6H3WPQVTX0');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="title">Classplay - Games</title>
     <link id="favicon" rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <meta name="description" content="A game hub built for students, by students" property="og:description">
     <meta name="title" content="Classplay" property="og:title">
+    <script src="/assets/js/geoblocker.js"></script>
     <meta name="image" content="https://useclassplay.github.io/img/banner.png" property="og:image">
     <style>
         :root {
             --primary: #fc2651;
             --text: #f1f5f9;
             --bg: #0f172a;
+            --bg-secondary: #1e293b;
             --surface: #1e293b;
             --border: #334155;
             --glass: rgba(30, 41, 59, 0.8);
             --radius: 12px;
             --radius-lg: 16px;
-            --shadow-lg: 0 8px 15px -3px rgb(0 0 0 / 0.2);
-            --shadow-xl: 0 15px 25px -5px rgb(0 0 0 / 0.4);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.6);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.7), 0 8px 10px -6px rgb(0 0 0 / 0.7);
             --gradient-primary: linear-gradient(135deg, #fc2651 0%, #e91e47 100%);
             --gradient-surface: linear-gradient(135deg, #1e293b 0%, #334155 100%);
         }
@@ -31,10 +40,9 @@
             color: var(--text);
         }
         header {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
+            background: var(--gradient-primary);
             position: sticky; top: 0; z-index: 100;
-            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
         }
         .header-content {
             max-width: 1200px; margin: 0 auto; padding: 1.25rem 1rem;
@@ -42,20 +50,21 @@
         }
         .logo {
             font-size: 1.75rem; font-weight: 800;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             text-decoration: none;
         }
         #gameSearch {
-            flex: 1; padding: 0.875rem 1rem; border: 1px solid var(--border);
-            border-radius: var(--radius); background: var(--surface);
+            flex: 1; padding: 0.875rem 1rem; border: 0;
+            border-radius: var(--radius); background: var(--glass);
             color: var(--text); font-size: 15px; outline: none; max-width: 500px;
-            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        #gameSearch:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(252, 38, 81, 0.3);
+        .data-links { display: flex; align-items: center; gap: 1rem; }
+        .data-links a {
+            color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;
+            cursor: pointer; text-decoration: none; white-space: nowrap;
         }
+        .data-links a:hover { color: white; text-decoration: underline; }
         main { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
         .games-container {
             display: grid;
@@ -63,29 +72,20 @@
             gap: 1.5rem;
         }
         .game-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden; text-decoration: none;
-            display: flex; flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            box-shadow: var(--shadow-lg);
+            background: var(--gradient-surface); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); overflow: hidden;
+            text-decoration: none; display: flex; flex-direction: column;
+            transition: all 0.4s;
         }
         .game-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--primary);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-xl); border-color: var(--primary);
         }
-        .game-card img {
-            width: 100%; aspect-ratio: 4 / 3;
-            object-fit: cover;
-            display: block;
-            border-bottom: 1px solid var(--border);
-        }
+        .game-card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
         .game-title {
-            color: var(--text); padding: 1rem; font-weight: 600;
-            font-size: 1rem; line-height: 1.4; text-align: left;
-            flex-grow: 1; display: flex; align-items: center; justify-content: flex-start;
+            color: var(--text); padding: 1.25rem 1rem; font-weight: 600;
+            font-size: 14px; text-align: center; flex-grow: 1;
+            display: flex; align-items: center; justify-content: center;
         }
     </style>
 </head>
@@ -93,49 +93,60 @@
     <header>
         <div class="header-content">
             <a href="/" class="logo">Classplay</a>
-            <input type="text" id="gameSearch" placeholder="Search through our games!" onkeyup="filterGames()" />
+            <input type="text" id="gameSearch" placeholder="Search games..." onkeyup="filterGames()" />
+            <div class="data-links">
+                <a onclick="saveData()">Export Data</a>
+                <a onclick="document.getElementById('importData').click()">Import Data</a>
+                <input type="file" id="importData" style="display: none;" onchange="loadData(event)">
+            </div>
         </div>
     </header>
+
     <main>
         <div class="games-container" id="gamesContainer"></div>
     </main>
 
     <script>
-        // Store all game data in a single array of objects
         const games = [
             { id: 'Request', href: 'https://forms.gle/ZRD1M73cgp8iv2757', imgSrc: 'img/gforms-logo.png', title: 'Request a game' },
             { id: 'bugs', href: 'https://forms.office.com/r/M4RjEEbAYh', imgSrc: 'img/randomizer.png', title: 'Report Bugs' },
             { id: 'Minecraft', href: 'Eaglercraft_1.9.html', imgSrc: 'img/mc.png', title: 'Minecraft' },
             { id: 'Minesweeper', href: 'minesweeper.html', imgSrc: 'img/mc.png', title: 'Minesweeper' },
+            { id: 'cc', href: 'Cookie_Clicker/Cookie-Clicker-Source-Code-master/index.html', imgSrc: 'img/cookieclicker.png', title: 'Cookie Clicker', onclick: 'cookie()' },
+            { id: 'Dadish 3', href: '/assets/games/html/dadish3.html', imgSrc: 'img/dadish3.png', title: 'Dadish 3' },
             { id: 'Super Mario 64', href: 'blocked.html', imgSrc: 'img/mario64.png', title: 'Super Mario 64', onclick: 'block()' },
             { id: 'Retro Bowl', href: '/games/retro-bowl/', imgSrc: 'img/retro-bowl.png', title: 'Retro Bowl' },
-            { id: 'Retro Bowl College', href: '/games/rb-college/', imgSrc: 'img/rb-college.png', title: 'RB College', searchTerms: 'Retro Bowl College' },
+            { id: 'Retro Bowl College', href: '/games/rb-college/', imgSrc: 'img/rb-college.png', title: 'RB College' },
             { id: 'Football Bros', href: '/games/football-bros/', imgSrc: 'img/footballbros.png', title: 'Football Bros' },
+            { id: 'Polytrack 4', href: '/games/polytrack/', imgSrc: 'img/polytrack.png', title: 'Polytrack 4' },
             { id: 'Slope', href: '/games/slope/', imgSrc: 'img/slope.png', title: 'Slope' },
             { id: 'Amazing Rope Police', href: '/games/amazing-rope-police/', imgSrc: 'img/gta.png', title: 'Amazing Rope Police' },
             { id: 'Run 3', href: '/games/run3/', imgSrc: 'img/run3.png', title: 'Run 3' },
             { id: 'Dadish 2', href: '/games/dadish-2/', imgSrc: 'img/dadish2.png', title: 'Dadish 2' },
             { id: 'Dadish', href: '/games/dadish/', imgSrc: 'img/dadish.png', title: 'Dadish' },
             { id: 'Sandboxels', href: '/games/sandboxels/', imgSrc: 'img/sandboxels.png', title: 'Sandboxels' },
-            { id: 'Snow Rider 3D', href: '/games/snowrider/', imgSrc: 'img/snowrider.png', title: 'Snow Rider 3D' },
+            { id: 'Sandtrix', href: '/games/sandtris/', imgSrc: 'img/sandtrix.png', title: 'Sandtrix' },
+            { id: 'Snow Rider', href: '/games/snowrider/', imgSrc: 'img/snowrider.png', title: 'Snow Rider 3D' },
             { id: 'A Small World Cup', href: '/games/asmallworldcup/', imgSrc: 'img/aswc2023.png', title: 'A Small World Cup 2023' },
-            { id: '1v1.LOL', href: '/games/1v1lol/', imgSrc: 'img/1v1lol.png', title: '1v1 LOL' },
-            { id: 'OvO', href: '/games/ovo/', imgSrc: 'img/ovo.png', title: 'OvO' },
-            { id: 'BasketBros', href: '/games/basketbros/', imgSrc: 'img/basketbros.png', title: 'Basket Bros' },
-            { id: 'Drift Boss', href: '/games/driftboss/', imgSrc: 'img/driftboss.png', title: 'Drift Boss' },
-            { id: 'Geometry Dash', href: '/games/html/gd', imgSrc: 'img/gd.png', title: 'Geometry Dash', searchTerms: 'gd' },
-            { id: 'Five Nights at Freddy\'s', href: '/games/fnaf/', imgSrc: 'img/fnaf.png', title: 'FNAF' },
-            { id: 'Five Nights at Freddy\'s 2', href: '/games/fnaf2/', imgSrc: 'img/fnaf2.png', title: 'FNAF 2' },
-            { id: 'Five Nights at Freddy\'s 3', href: '/games/fnaf3/', imgSrc: 'img/fnaf3.png', title: 'FNAF 3' },
-            { id: 'Five Nights at Freddy\'s 4', href: '/games/fnaf4/', imgSrc: 'img/fnaf4.png', title: 'FNAF 4' },
-            { id: 'Territorial.io', href: '/games/html/territorial', imgSrc: 'img/territorial.png', title: 'territorial.io' },
-            { id: 'The Worlds Hardest Game', href: '/games/worldshardestgame/', imgSrc: 'img/whg.png', title: 'World\'s Hardest Game' },
-            { id: 'Tic Tac Toe', href: '/games/tic-tac-toe/', imgSrc: 'img/ttt.png', title: 'Tic Tac Toe' },
+            { id: '1v1 LOL', href: '/games/1v1lol/', imgSrc: 'img/1v1lol.png', title: '1v1 LOL' },
+            { id: 'ovo', href: '/games/ovo/', imgSrc: 'img/ovo.png', title: 'OvO' },
+            { id: 'Basket Bros', href: '/games/basketbros/', imgSrc: 'img/basketbros.png', title: 'Basket Bros' },
+            { id: 'drift boss', href: '/games/driftboss/', imgSrc: 'img/driftboss.png', title: 'Drift Boss' },
+            { id: 'geometry dash gd', href: '/games/html/gd', imgSrc: 'img/gd.png', title: 'Geometry Dash' },
+            { id: 'FNAF', href: '/games/fnaf/', imgSrc: 'img/fnaf.png', title: 'FNAF' },
+            { id: 'FNAF 2', href: '/games/fnaf2/', imgSrc: 'img/fnaf2.png', title: 'FNAF 2' },
+            { id: 'FNAF 3', href: '/games/fnaf3/', imgSrc: 'img/fnaf3.png', title: 'FNAF 3' },
+            { id: 'FNAF 4', href: '/games/fnaf4/', imgSrc: 'img/fnaf4.png', title: 'FNAF 4' },
+            { id: 'OWT 1', href: '/games/owt1/', imgSrc: 'img/owt1.png', title: 'One Way Ticket' },
+            { id: 'OWT 2', href: '/games/owt2/', imgSrc: 'img/owt2.png', title: 'One Way Ticket 2' },
+            { id: 'Territorial', href: '/games/html/territorial', imgSrc: 'img/territorial.png', title: 'territorial.io' },
+            { id: 'worlds hardest game', href: '/games/worldshardestgame/', imgSrc: 'img/whg.png', title: 'World\'s Hardest Game' },
+            { id: 'ttt', href: '/games/tic-tac-toe/', imgSrc: 'img/ttt.png', title: 'Tic Tac Toe' },
             { id: '2048', href: '/games/2048/', imgSrc: 'img/2048.png', title: '2048' },
             { id: 'Chess', href: '/games/chess/', imgSrc: 'img/chess.png', title: 'Chess' },
             { id: 'Block Blast', href: '/games/blockblast/', imgSrc: 'img/blockblast.png', title: 'Block Blast' },
             { id: 'House of Hazards', href: '/games/houseofhazards/', imgSrc: 'img/hoh.png', title: 'House of Hazards' },
-            { id: '8 Ball Pool', href: '/games/8ball/', imgSrc: 'img/8ball.png', title: '8 Ball' },
+            { id: '8 Ball', href: '/games/8ball/', imgSrc: 'img/8ball.png', title: '8 Ball' },
             { id: 'Basketball Stars', href: '/games/basketballstars/', imgSrc: 'img/bballstars.png', title: 'Basketball Stars' },
             { id: 'Big Tower Tiny Square', href: '/games/btts/', imgSrc: 'img/btts.png', title: 'Big Tower Tiny Square' },
             { id: 'Alien Shooter', href: '/games/html/alienshooter.html', imgSrc: 'img/alienshooter.png', title: 'Alien Shooter' },
@@ -147,26 +158,24 @@
             { id: 'Moto X3M', href: '/games/html/motox3m.html', imgSrc: 'img/motox3m.png', title: 'Moto X3M' },
             { id: 'Moto X3M 2', href: '/games/html/motox3m2.html', imgSrc: 'img/moto2.png', title: 'Moto X3M 2' },
             { id: 'Moto X3M 3', href: '/games/html/motox3m3.html', imgSrc: 'img/moto3.png', title: 'Moto X3M 3' },
-            { id: 'Murder', href: '/games/murder/', imgSrc: 'img/murder.png', title: 'MURDER 🗡️' },
-            { id: 'Paper.io 2', href: '/games/paperio2/', imgSrc: 'img/paperio.png', title: 'paper.io' },
+            { id: 'MURDER', href: '/games/murder/', imgSrc: 'img/murder.png', title: 'MURDER 🗡️' },
+            { id: 'paper.io', href: '/games/paperio2/', imgSrc: 'img/paperio.png', title: 'paper.io' },
             { id: 'Soccer Random', href: '/games/soccerrandom/', imgSrc: 'img/soccerrandom.png', title: 'Soccer Random' },
             { id: 'SUPERHOT', href: '/games/superhot/', imgSrc: 'img/superhot.png', title: 'SUPERHOT' },
             { id: 'Time Shooter 3', href: '/games/timeshooter3/', imgSrc: 'img/ts3.png', title: 'Time Shooter 3' },
             { id: 'Tiny Fishing', href: '/games/tinyfishing/', imgSrc: 'img/tinyfishing.png', title: 'Tiny Fishing' },
             { id: 'Volley Random', href: '/games/volleyrandom/', imgSrc: 'img/volleyrandom.png', title: 'Volley Random' },
         ];
-
-        const gamesContainer = document.getElementById('gamesContainer');
-
-        // Function to generate and display all game cards
+        
+        // --- DYNAMICALLY CREATE GAME CARDS ---
         function displayGames() {
+            const container = document.getElementById('gamesContainer');
             games.forEach(game => {
                 const card = document.createElement('a');
                 card.href = game.href;
                 card.className = 'game-card';
                 card.id = game.id;
                 
-                // Add onclick if it exists
                 if (game.onclick) {
                     card.setAttribute('onclick', game.onclick);
                 }
@@ -175,35 +184,189 @@
                     <img src="${game.imgSrc}" alt="${game.title}">
                     <div class="game-title">${game.title}</div>
                 `;
-                gamesContainer.appendChild(card);
+                container.appendChild(card);
             });
         }
+        document.addEventListener('DOMContentLoaded', displayGames);
 
-        // Updated search function
+        // --- EXISTING FUNCTIONS (UNCHANGED) ---
         function filterGames() {
             const query = document.getElementById('gameSearch').value.toLowerCase();
             document.querySelectorAll('.game-card').forEach(card => {
                 const cardId = card.id.toLowerCase();
                 const cardTitle = card.querySelector('.game-title').textContent.toLowerCase();
-                // Find the original game object to check for extra search terms
-                const gameObject = games.find(g => g.id === card.id);
-                const searchTerms = gameObject && gameObject.searchTerms ? gameObject.searchTerms.toLowerCase() : '';
-
-                if (cardId.includes(query) || cardTitle.includes(query) || searchTerms.includes(query)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+                card.style.display = (cardId.includes(query) || cardTitle.includes(query)) ? 'flex' : 'none';
             });
         }
+        
+        function block() { localStorage.setItem("accessGranted", "bob"); }
+        function cookie() { console.log("cookie activated"); }
 
-        function block() {
-            localStorage.setItem("accessGranted", "bob");
+        // --- DATA PORTABILITY FUNCTIONS ---
+        function sanitizeData(obj, maxStringLen = 1000, maxArrayLen = 10000) {
+            if (typeof obj === 'string') return obj.length > maxStringLen ? obj.slice(0, maxStringLen) + '...[truncated]' : obj;
+            if (obj instanceof Uint8Array) return obj.length > maxArrayLen ? `[Uint8Array too large]` : obj;
+            if (Array.isArray(obj)) return obj.map(item => sanitizeData(item, maxStringLen, maxArrayLen));
+            if (obj && typeof obj === 'object') {
+                const newObj = {};
+                for (const key in obj) {
+                    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                        newObj[key] = sanitizeData(obj[key], maxStringLen, maxArrayLen);
+                    }
+                }
+                return newObj;
+            }
+            return obj;
         }
 
-        // Call the function to display games when the page loads
-        document.addEventListener('DOMContentLoaded', displayGames);
+        async function saveData() {
+            alert("Exporting all your game progress. This might take a moment.");
+            const result = {
+                cookies: document.cookie,
+                localStorage: {...localStorage},
+                sessionStorage: {...sessionStorage},
+                indexedDB: {},
+                caches: {}
+            };
+            try {
+                const dbs = await indexedDB.databases();
+                for (const dbInfo of dbs) {
+                    if (!dbInfo.name) continue;
+                    result.indexedDB[dbInfo.name] = {};
+                    await new Promise((resolve, reject) => {
+                        const openRequest = indexedDB.open(dbInfo.name, dbInfo.version);
+                        openRequest.onerror = () => reject(openRequest.error);
+                        openRequest.onsuccess = () => {
+                            const db = openRequest.result;
+                            const storeNames = Array.from(db.objectStoreNames);
+                            if (storeNames.length === 0) { resolve(); return; }
+                            const transaction = db.transaction(storeNames, "readonly");
+                            const storePromises = storeNames.map(storeName => new Promise((res, rej) => {
+                                result.indexedDB[dbInfo.name][storeName] = [];
+                                const store = transaction.objectStore(storeName);
+                                const getAllRequest = store.getAll();
+                                getAllRequest.onsuccess = () => {
+                                    result.indexedDB[dbInfo.name][storeName] = sanitizeData(getAllRequest.result, 1000, 100);
+                                    res();
+                                };
+                                getAllRequest.onerror = () => rej(getAllRequest.error);
+                            }));
+                            Promise.all(storePromises).then(() => resolve());
+                        };
+                    });
+                }
+                const cacheNames = await caches.keys();
+                for (const cacheName of cacheNames) {
+                    const cache = await caches.open(cacheName);
+                    const requests = await cache.keys();
+                    result.caches[cacheName] = [];
+                    for (const req of requests) {
+                        const response = await cache.match(req);
+                        if (!response) continue;
+                        const cloned = response.clone();
+                        const contentType = cloned.headers.get('content-type') || '';
+                        let body;
+                        try {
+                            if (contentType.includes('json')) body = await cloned.json();
+                            else if (contentType.includes('text') || contentType.includes('javascript')) body = await cloned.text();
+                            else {
+                                const buffer = await cloned.arrayBuffer();
+                                body = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+                            }
+                        } catch (e) { body = '[Unable to read body]'; }
+                        result.caches[cacheName].push({ url: req.url, body, contentType });
+                    }
+                }
+                alert("Export complete! Your download will begin now.");
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(new Blob([JSON.stringify(result)], { type: "text/plain" }));
+                link.download = `classplay-data-${Date.now()}.json`;
+                link.click();
+                link.remove();
+            } catch (error) {
+                console.error("Error saving data:", error);
+                alert("An error occurred while exporting your data.");
+            }
+        }
 
+        function loadData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                alert("Importing data. The page will reload when finished.");
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.cookies) { data.cookies.split(';').forEach(cookie => { document.cookie = cookie.trim(); }); }
+                    if (data.localStorage) { for (const key in data.localStorage) { localStorage.setItem(key, data.localStorage[key]); } }
+                    if (data.sessionStorage) { for (const key in data.sessionStorage) { sessionStorage.setItem(key, data.sessionStorage[key]); } }
+                    if (data.indexedDB) {
+                        for (const dbName in data.indexedDB) {
+                            const stores = data.indexedDB[dbName];
+                            const dbVersion = stores.version || 1;
+                            await new Promise((resolve, reject) => {
+                                const request = indexedDB.open(dbName, dbVersion);
+                                request.onupgradeneeded = e => {
+                                    const db = e.target.result;
+                                    for (const storeName in stores) {
+                                        if (!db.objectStoreNames.contains(storeName) && storeName !== 'version') {
+                                            db.createObjectStore(storeName, { autoIncrement: true });
+                                        }
+                                    }
+                                };
+                                request.onsuccess = e => {
+                                    const db = e.target.result;
+                                    const storeNames = Object.keys(stores).filter(name => name !== 'version');
+                                    if(storeNames.length === 0) return resolve();
+                                    const transaction = db.transaction(storeNames, 'readwrite');
+                                    transaction.onerror = () => reject(transaction.error);
+                                    let pending = storeNames.length;
+                                    for (const storeName of storeNames) {
+                                        const objectStore = transaction.objectStore(storeName);
+                                        objectStore.clear().onsuccess = () => {
+                                            stores[storeName].forEach(item => {
+                                                try {
+                                                  objectStore.put(item)
+                                                } catch(err) {
+                                                  console.warn(`Could not add item to ${storeName}:`, item, err)
+                                                }
+                                            });
+                                            if (--pending === 0) resolve();
+                                        };
+                                    }
+                                };
+                                request.onerror = () => reject(request.error);
+                            });
+                        }
+                    }
+                    if (data.caches) {
+                        for (const cacheName in data.caches) {
+                            const cache = await caches.open(cacheName);
+                            await cache.keys().then(keys => Promise.all(keys.map(k => cache.delete(k))));
+                            for (const entry of data.caches[cacheName]) {
+                                let responseBody;
+                                if (entry.contentType.includes('json')) responseBody = JSON.stringify(entry.body);
+                                else if (entry.contentType.includes('text') || entry.contentType.includes('javascript')) responseBody = entry.body;
+                                else {
+                                    const binaryStr = atob(entry.body);
+                                    const bytes = new Uint8Array(binaryStr.length);
+                                    for (let i = 0; i < binaryStr.length; i++) { bytes[i] = binaryStr.charCodeAt(i); }
+                                    responseBody = bytes.buffer;
+                                }
+                                const response = new Response(responseBody, { headers: { 'content-type': entry.contentType } });
+                                await cache.put(entry.url, response);
+                            }
+                        }
+                    }
+                    alert("Data loaded successfully! The page will now reload.");
+                    window.location.reload();
+                } catch(error) {
+                    console.error("Error loading data:", error);
+                    alert("Failed to import data. The file may be corrupt.");
+                }
+            };
+            reader.readAsText(file);
+        }
     </script>
 </body>
 </html>
