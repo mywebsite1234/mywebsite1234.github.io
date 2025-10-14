@@ -107,7 +107,7 @@
     </main>
 
     <script>
-        const games = [
+        let games = [
             { id: 'Request', href: 'https://forms.gle/ZRD1M73cgp8iv2757', imgSrc: 'img/gforms-logo.png', title: 'Request a game' },
             { id: 'bugs', href: 'https://forms.office.com/r/M4RjEEbAYh', imgSrc: 'img/randomizer.png', title: 'Report Bugs' },
             { id: 'Minecraft', href: 'Eaglercraft_1.9.html', imgSrc: 'img/mc.png', title: 'Minecraft' },
@@ -115,59 +115,45 @@
             { id: 'cc', href: 'Cookie_Clicker/Cookie-Clicker-Source-Code-master/index.html', imgSrc: 'img/cookieclicker.png', title: 'Cookie Clicker', onclick: 'cookie()' },
             { id: 'Dadish 3', href: '/assets/games/html/dadish3.html', imgSrc: 'img/dadish3.png', title: 'Dadish 3' },
             { id: 'Super Mario 64', href: 'blocked.html', imgSrc: 'img/mario64.png', title: 'Super Mario 64', onclick: 'block()' },
-            { id: 'Retro Bowl', href: '/games/retro-bowl/', imgSrc: 'img/retro-bowl.png', title: 'Retro Bowl' },
-            { id: 'Retro Bowl College', href: '/games/rb-college/', imgSrc: 'img/rb-college.png', title: 'RB College' },
-            { id: 'Football Bros', href: '/games/football-bros/', imgSrc: 'img/footballbros.png', title: 'Football Bros' },
-            { id: 'Polytrack 4', href: '/games/polytrack/', imgSrc: 'img/polytrack.png', title: 'Polytrack 4' },
-            { id: 'Slope', href: '/games/slope/', imgSrc: 'img/slope.png', title: 'Slope' },
-            // { id: 'Amazing Rope Police', href: '/games/amazing-rope-police/', imgSrc: 'img/gta.png', title: 'Amazing Rope Police' },
-            { id: 'Run 3', href: '/games/run3/', imgSrc: 'img/run3.png', title: 'Run 3' },
-            { id: 'Dadish 2', href: '/games/dadish-2/', imgSrc: 'img/dadish2.png', title: 'Dadish 2' },
-            { id: 'Dadish', href: '/games/dadish/', imgSrc: 'img/dadish.png', title: 'Dadish' },
-            { id: 'Dadish 3D', href: '/games/dadish-3d/', imgSrc: 'img/dadish3d.png', title: 'Dadish 3D' },
-            { id: 'Daily Dadish', href: '/games/daily-dadish/', imgSrc: 'img/daily-dadish.png', title: 'Daily Dadish' },
-            { id: 'Sandboxels', href: '/games/sandboxels/', imgSrc: 'img/sandboxels.png', title: 'Sandboxels' },
-            // { id: 'Sandtrix', href: '/games/sandtris/', imgSrc: 'img/sandtrix.png', title: 'Sandtrix' },
-            { id: 'Snow Rider', href: '/games/snowrider/', imgSrc: 'img/snowrider.png', title: 'Snow Rider 3D' },
-            { id: 'A Small World Cup', href: '/games/asmallworldcup/', imgSrc: 'img/aswc2023.png', title: 'A Small World Cup 2023' },
-            // { id: '1v1 LOL', href: '/games/1v1lol/', imgSrc: 'img/1v1lol.png', title: '1v1 LOL' },
-            { id: 'ovo', href: '/games/ovo/', imgSrc: 'img/ovo.png', title: 'OvO' },
-            // { id: 'Basket Bros', href: '/games/basketbros/', imgSrc: 'img/basketbros.png', title: 'Basket Bros' },
-            { id: 'drift boss', href: '/games/driftboss/', imgSrc: 'img/driftboss.png', title: 'Drift Boss' },
-            // { id: 'geometry dash gd', href: '/games/html/gd', imgSrc: 'img/gd.png', title: 'Geometry Dash' },
-            // { id: 'FNAF', href: '/games/fnaf/', imgSrc: 'img/fnaf.png', title: 'FNAF' },
-            // { id: 'FNAF 2', href: '/games/fnaf2/', imgSrc: 'img/fnaf2.png', title: 'FNAF 2' },
-            // { id: 'FNAF 3', href: '/games/fnaf3/', imgSrc: 'img/fnaf3.png', title: 'FNAF 3' },
-            // { id: 'FNAF 4', href: '/games/fnaf4/', imgSrc: 'img/fnaf4.png', title: 'FNAF 4' },
-            // { id: 'OWT 1', href: '/games/owt1/', imgSrc: 'img/owt1.png', title: 'One Way Ticket' },
-            // { id: 'OWT 2', href: '/games/owt2/', imgSrc: 'img/owt2.png', title: 'One Way Ticket 2' },
-            // { id: 'Territorial', href: '/games/html/territorial', imgSrc: 'img/territorial.png', title: 'territorial.io' },
-            { id: 'worlds hardest game', href: '/games/worldshardestgame/', imgSrc: 'img/whg.png', title: 'World\'s Hardest Game' },
-            // { id: 'ttt', href: '/games/tic-tac-toe/', imgSrc: 'img/ttt.png', title: 'Tic Tac Toe' },
-            // { id: '2048', href: '/games/2048/', imgSrc: 'img/2048.png', title: '2048' },
-            // { id: 'Chess', href: '/games/chess/', imgSrc: 'img/chess.png', title: 'Chess' },
-            { id: 'Block Blast', href: '/games/blockblast/', imgSrc: 'img/blockblast.png', title: 'Block Blast' },
-            { id: 'House of Hazards', href: '/games/houseofhazards/', imgSrc: 'img/hoh.png', title: 'House of Hazards' },
-            // { id: '8 Ball', href: '/games/8ball/', imgSrc: 'img/8ball.png', title: '8 Ball' },
-            // { id: 'Basketball Stars', href: '/games/basketballstars/', imgSrc: 'img/bballstars.png', title: 'Basketball Stars' },
-            { id: 'Big Tower Tiny Square', href: '/games/btts/', imgSrc: 'img/btts.png', title: 'Big Tower Tiny Square' },
-            // { id: 'Alien Shooter', href: '/games/html/alienshooter.html', imgSrc: 'img/alienshooter.png', title: 'Alien Shooter' },
-            // { id: 'Basket Random', href: '/games/basketrandom/', imgSrc: 'img/basketrandom.png', title: 'Basket Random' },
-            // { id: 'Bitlife', href: '/games/bitlife/', imgSrc: 'img/bitlife.png', title: 'Bitlife' },
-            // { id: 'Boxing Random', href: '/games/boxingrandom/', imgSrc: 'img/boxingrandom.png', title: 'Boxing Random' },
-            { id: 'Cluster Rush', href: '/games/clusterrush/', imgSrc: 'img/clusterrush.png', title: 'Cluster Rush' },
-            // { id: 'Eggy Car', href: '/games/eggycar/', imgSrc: 'img/eggycar.png', title: 'Eggy Car' },
-            { id: 'Moto X3M', href: '/games/html/motox3m.html', imgSrc: 'img/motox3m.png', title: 'Moto X3M' },
-            { id: 'Moto X3M 2', href: '/games/html/motox3m2.html', imgSrc: 'img/moto2.png', title: 'Moto X3M 2' },
-            { id: 'Moto X3M 3', href: '/games/html/motox3m3.html', imgSrc: 'img/moto3.png', title: 'Moto X3M 3' },
-            // { id: 'MURDER', href: '/games/murder/', imgSrc: 'img/murder.png', title: 'MURDER 🗡️' },
-            { id: 'paper.io', href: '/games/paperio2/', imgSrc: 'img/paperio.png', title: 'paper.io' },
-            // { id: 'Soccer Random', href: '/games/soccerrandom/', imgSrc: 'img/soccerrandom.png', title: 'Soccer Random' },
-            // { id: 'SUPERHOT', href: '/games/superhot/', imgSrc: 'img/superhot.png', title: 'SUPERHOT' },
-            // { id: 'Time Shooter 3', href: '/games/timeshooter3/', imgSrc: 'img/ts3.png', title: 'Time Shooter 3' },
-            { id: 'Tiny Fishing', href: '/games/tinyfishing/', imgSrc: 'img/tinyfishing.png', title: 'Tiny Fishing' },
-            // { id: 'Volley Random', href: '/games/volleyrandom/', imgSrc: 'img/volleyrandom.png', title: 'Volley Random' },
+            { id: 'Retro Bowl', href: '', imgSrc: 'img/retro-bowl.png', title: 'Retro Bowl' },
+            { id: 'Retro Bowl College', href: '', imgSrc: 'img/rb-college.png', title: 'RB College' },
+            { id: 'Football Bros', href: '', imgSrc: 'img/footballbros.png', title: 'Football Bros' },
+            { id: 'Polytrack 4', href: '', imgSrc: 'img/polytrack.png', title: 'Polytrack 4' },
+            { id: 'Slope', href: '', imgSrc: 'img/slope.png', title: 'Slope' },
+            { id: 'Run 3', href: '', imgSrc: 'img/run3.png', title: 'Run 3' },
+            { id: 'Dadish 2', href: '', imgSrc: 'img/dadish2.png', title: 'Dadish 2' },
+            { id: 'Dadish', href: '', imgSrc: 'img/dadish.png', title: 'Dadish' },
+            { id: 'Dadish 3D', href: '', imgSrc: 'img/dadish3d.png', title: 'Dadish 3D' },
+            { id: 'Daily Dadish', href: '', imgSrc: 'img/daily-dadish.png', title: 'Daily Dadish' },
+            { id: 'Sandboxels', href: '', imgSrc: 'img/sandboxels.png', title: 'Sandboxels' },
+            { id: 'Snow Rider', href: '', imgSrc: 'img/snowrider.png', title: 'Snow Rider 3D' },
+            { id: 'A Small World Cup', href: '', imgSrc: 'img/aswc2023.png', title: 'A Small World Cup 2023' },
+            { id: 'ovo', href: '', imgSrc: 'img/ovo.png', title: 'OvO' },
+            { id: 'drift boss', href: '', imgSrc: 'img/driftboss.png', title: 'Drift Boss' },
+            { id: 'worlds hardest game', href: '', imgSrc: 'img/whg.png', title: 'World\'s Hardest Game' },
+            { id: 'Block Blast', href: '', imgSrc: 'img/blockblast.png', title: 'Block Blast' },
+            { id: 'House of Hazards', href: '', imgSrc: 'img/hoh.png', title: 'House of Hazards' },
+            { id: 'Big Tower Tiny Square', href: '', imgSrc: 'img/btts.png', title: 'Big Tower Tiny Square' },
+            { id: 'Cluster Rush', href: '', imgSrc: 'img/clusterrush.png', title: 'Cluster Rush' },
+            { id: 'Moto X3M', href: '', imgSrc: 'img/motox3m.png', title: 'Moto X3M' },
+            { id: 'Moto X3M 2', href: '', imgSrc: 'img/moto2.png', title: 'Moto X3M 2' },
+            { id: 'Moto X3M 3', href: '', imgSrc: 'img/moto3.png', title: 'Moto X3M 3' },
+            { id: 'paper.io', href: '', imgSrc: 'img/paperio.png', title: 'paper.io' },
+            { id: 'Tiny Fishing', href: '', imgSrc: 'img/tinyfishing.png', title: 'Tiny Fishing' },
         ];
+
+        // --- UPDATE GAME PATHS ---
+        const exceptions = ['Request', 'bugs', 'Minecraft', 'Minesweeper', 'cc', 'Dadish 3', 'Super Mario 64'];
+        games = games.map(game => {
+            // If the game ID is in the exceptions list, or if the href is already a full URL, do nothing
+            if (exceptions.includes(game.id) || game.href.startsWith('http')) {
+                return game;
+            }
+            // Otherwise, build the new path
+            const gameName = game.id.toLowerCase().replace(/[^a-z0-9]/g, ''); // Sanitize the ID for the filename
+            game.href = `/assets/games/html/${gameName}.html`;
+            return game;
+        });
         
         // --- DYNAMICALLY CREATE GAME CARDS ---
         function displayGames() {
@@ -372,9 +358,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
