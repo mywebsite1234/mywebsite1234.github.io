@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>OvO B</title>
+<title>OvO</title>
 <!-- All margins and padding must be zero for the canvas to fill the screen. -->
 <style type="text/css">
 		* {
@@ -30,12 +30,10 @@
 	</canvas>
 </div>
 
-<!-- MODIFIED: Using a reliable CDN for jQuery to prevent loading errors -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<!-- MODIFIED: Updated paths to be absolute from the site root -->
-<script src="/assets/games/html/ovo/GameAnalytics.js"></script>
-<script src="/assets/games/html/ovo/c2runtime.js"></script>
+<!-- Scripts are now using simple relative paths because they are in the same folder -->
+<script src="jquery-3.4.1.min.js"></script>
+<script src="c2runtime.js"></script>
+<script src="GameAnalytics.js"></script>
 
 <script>
 // Start the Construct 2 project running on window load.
