@@ -25,18 +25,17 @@
 </head>
 <body>
 <div id="c2canvasdiv">
-	<canvas id="ovo\c2canvas" width="640" height="640">
+	<canvas id="c2canvas" width="640" height="640">
 		Your browser does not appear to support HTML5. Try upgrading your browser to the latest version.
 	</canvas>
 </div>
 
-<!-- MODIFIED: Pages load faster with scripts at the bottom -->
-<!-- MODIFIED: Construct 2 exported games require jQuery. -->
+<!-- MODIFIED: Using a reliable CDN for jQuery to prevent loading errors -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="ovo\GameAnalytics.js"></script>
 
-<!-- MODIFIED: The runtime script. You can rename it, but don't forget to rename the reference here as well. -->
-<script src="ovo\c2runtime.js"></script>
+<!-- MODIFIED: Updated paths to be absolute from the site root -->
+<script src="/assets/games/html/ovo/GameAnalytics.js"></script>
+<script src="/assets/games/html/ovo/c2runtime.js"></script>
 
 <script>
 // Start the Construct 2 project running on window load.
